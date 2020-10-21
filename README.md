@@ -1,6 +1,5 @@
 # Healthcare-Data-Analytics-and-Data-Mining
-
-This repository contains my healthcare data analytics and data mining projects.
+The goal of this project is to study US Healthcare market and analyze Insurancce data.
 
 ### 1.Analyzing US Healthcare Providor 
   Topics: \
