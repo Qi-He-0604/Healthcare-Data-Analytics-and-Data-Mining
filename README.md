@@ -1,5 +1,5 @@
 # Healthcare-Data-Analytics-and-Data-Mining
-The goal of this project is to study US Healthcare market and analyze Insurancce data.
+The goal of this project is to study US Healthcare market and analyze Insurance Claim data.
 
 ### 1.Analyzing US Healthcare Providor 
   Topics: \
