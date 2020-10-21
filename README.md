@@ -10,7 +10,7 @@ This repository contains my healthcare data analytics and data mining projects.
   
 ### 2.Analyzing US Insurance Makert 
   Topics: \
-  Market share of major insurance companies and the Herfindahl-Hirschman Index (HHI) in different states \ 
+  Market share of major insurance companies and the Herfindahl-Hirschman Index (HHI) in different states \
   Insurance package analysis \
   Quality of care and performance of plans
   
