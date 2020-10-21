@@ -1,0 +1,36 @@
+---
+title: "HW3_R_code"
+author: "Group 5"
+date: "11/20/2019"
+output: html_document
+---
+```{r, message=FALSE}
+library(tidyverse)
+library(data.table)
+# import data
+vtinp16_dt = fread("~/Desktop/Brandeis/Healthcare Analytics/HW3/VTINP16_upd.csv")
+vtoutp16_dt = fread("~/Desktop/Brandeis/Healthcare Analytics/HW3/VTOUTP16.csv")
+vted16_dt = fread("~/Desktop/Brandeis/Healthcare Analytics/HW3/VTED16.csv")
+vtrevcode16_dt = fread("~/Desktop/Brandeis/Healthcare Analytics/HW3/VTREVCODE16.csv")
+```
+
+```{r}
+# filter particular Unique ID for analysis
+vtinp16_dt_selected = vtinp16_dt[UNIQ %in% c(254, 507033, 40436, 859382, 1585831, 200760, 3692, 690326),]
+vtrevcode16_dt_selected = vtrevcode16_dt[Uniq %in% c(254, 507033, 40436, 859382, 1585831, 200760, 3692, 690326),]
+head(vtinp16_dt_selected[vtrevcode16_dt_selected, on = c(UNIQ = "Uniq")][UNIQ %in% c(254, 507033, 40436, 859382, 1585831, 200760, 3692, 690326)])
+```
+
+```{r}
+# caculate the total charges across three different categories
+vtinp16_charges = vtinp16_dt %>% group_by(MDC, PPAY) %>% summarise(sum_charge = sum(CHRGS)/1000000) %>% arrange(PPAY, MDC) 
+vtinp16_charges_medicaid = vtinp16_dt %>% group_by(MDC) %>% filter(PPAY == 2 & !is.na(CHRGS)) %>% summarise(sum_charge = round(sum(CHRGS)/1000000)) %>% arrange(MDC) 
+vtinp16_charges_medicare = vtinp16_dt %>% group_by(MDC) %>% filter(PPAY == 1 & !is.na(CHRGS)) %>% summarise(sum_charge = round(sum(CHRGS)/1000000)) %>% arrange(MDC) 
+vtinp16_charges_others = vtinp16_dt %>% group_by(MDC) %>% filter(PPAY %in% c(6, 7) & !is.na(CHRGS)) %>% summarise(sum_charge = round(sum(CHRGS/1000000))) %>% arrange(MDC) 
+
+# combine all three data.frame together
+vtinp16_combined = cbind(vtinp16_charges_others, vtinp16_charges_medicare$sum_charge, vtinp16_charges_medicaid$sum_charge) 
+colnames(vtinp16_combined) = c("MDC", "others", "Medicare", "Medicaid")
+vtinp16_combined
+```
+
